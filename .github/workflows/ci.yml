@@ -36,9 +36,7 @@ jobs:
         run: |
           echo "Tests executed successfully" > test-results.txt
           echo "CI pipeline test report" >> test-results.txt
-
-      - name: Lendo arquivo results
-        run: cat test-results.txt  
+          cat test-results.txt
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
