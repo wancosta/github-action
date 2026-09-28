@@ -24,6 +24,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+          cache: 'pip'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -35,6 +36,9 @@ jobs:
         run: |
           echo "Tests executed successfully" > test-results.txt
           echo "CI pipeline test report" >> test-results.txt
+
+      - name: Lendo arquivo results
+        run: cat test-results.txt  
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
@@ -127,4 +131,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build application
-        run: echo "Building application..."
+        run: |
+          mkdir build
+          cp app.py build/
+          cp requeriments.txt build/
+      
+      - name: Show build
+        run: | 
+          echo "Build contents"
+          ls -la build/ 
+
+      - name: Upload application
+        uses: action/upload-artfact@v4
+        with:
+          name: application
+          path: build/
