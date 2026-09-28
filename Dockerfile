@@ -6,6 +6,6 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app-inexistente.py .
+COPY app.py .
 
 CMD ["python", "app.py"]
