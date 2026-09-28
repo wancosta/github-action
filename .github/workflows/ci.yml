@@ -112,8 +112,7 @@ jobs:
         run: python --version  
 
 
-  build:
-
+  docker-build:
     needs:
       - test
       - lint
@@ -123,23 +122,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build application
-        run: |
-          mkdir build
-          cp app.py build/
-          cp requeriments.txt build/
-      
-      - name: Show build
-        run: | 
-          echo "Build contents"
-          ls -la build/ 
-
-      - name: Upload application
-        uses: action/upload-artfact@v4
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
         with:
-          name: application
-          path: build/
+          context: .
+          push: false
+          tags: github-actions-sre-lab:${{ github.sha }}          
