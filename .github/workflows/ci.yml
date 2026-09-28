@@ -41,7 +41,25 @@ jobs:
         with:
           name: test-report
           path: test-results.txt
-        
+
+          
+  artifact-check:
+
+    needs:
+      - test
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Download test report
+        uses: actions/download-artifact@v5
+        with:
+          name: test-report
+
+      - name: Show test report
+        run: cat test-results.txt
+          
 
   lint:
 
