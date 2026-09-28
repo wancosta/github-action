@@ -31,6 +31,17 @@ jobs:
       - name: Run tests
         run: pytest
 
+      - name: Generate test report
+        run: |
+          echo "Tests executed successfully" > test-results.txt
+          echo "CI pipeline test report" >> test-results.txt
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test-results.txt
+        
 
   lint:
 
@@ -78,7 +89,7 @@ jobs:
       - name: Info check
         run: echo "Running CI on GitHub Actions" 
 
-      - name: Info check
+      - name: Info python version
         run: python --version  
 
 
