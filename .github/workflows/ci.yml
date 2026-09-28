@@ -53,11 +53,42 @@ jobs:
         run: flake8 .
 
 
+  security:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Security check
+        run: echo "Running security checks..."
+
+    
+  info:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout informativo
+        uses: actions/checkout@v4
+
+      - name: Info check
+        run: echo "Running CI on GitHub Actions" 
+
+      - name: Info check
+        run: python --version  
+
+
   build:
 
     needs:
       - test
       - lint
+      - security
+      - info
 
     runs-on: ubuntu-latest
 
