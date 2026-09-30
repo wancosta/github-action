@@ -12,11 +12,8 @@ on:
 jobs:
 
   test:
-
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -43,31 +40,24 @@ jobs:
           name: test-report
           path: test-results.txt
 
-          
+         
   artifact-check:
-
     needs:
       - test
-
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Download test report
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v4   # <--- CORRIGIDO DE v5 PARA v4
         with:
           name: test-report
 
       - name: Show test report
         run: cat test-results.txt
-          
+         
 
   lint:
-
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -84,11 +74,8 @@ jobs:
 
 
   security:
-
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -97,11 +84,8 @@ jobs:
 
     
   info:
-
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Checkout informativo
         uses: actions/checkout@v4
 
