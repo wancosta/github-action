@@ -130,4 +130,39 @@ jobs:
         with:
           context: .
           push: false
-          tags: github-actions-sre-lab:${{ github.sha }}          
+          tags: github-actions-sre-lab:${{ github.sha }}
+  
+
+  docker-push:
+    needs:
+      - test
+      - lint
+      - security
+      - info
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}/github-actions-sre-lab:${{ github.sha }}
